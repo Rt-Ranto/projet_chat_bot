@@ -18,6 +18,7 @@ import ChangerThemeButton from "../composants/changertheme";
 import supprimerChat from "../composants/supprimerChat";
 import Popover from "../composants/popover";
 import RenomerTitreDuChat from "../composants/renameInput";
+import ChatResponse from "../composants/reponseDuBot";
 
 export default function HomePage({user, onLogout}:{ user:User, onLogout:() => void}):JSX.Element{
     const [isOpen, setOpen] = useState<boolean>(false);
@@ -315,12 +316,20 @@ export default function HomePage({user, onLogout}:{ user:User, onLogout:() => vo
                             Message.map((msg)=>(
                                 <div key={msg.id}
                                 className={`flex ${msg.envoyeur === 'user' ? 'justify-end': 'justify-start'}`}>
-                                    <div className={`max-w-[80%] p-3 rounded-3xl shadow-sm ${msg.envoyeur === 'user' 
-                                        ?'bg-color5 text-lg mr-8 text-color9 font-fontArial rounded-tr-none'
-                                        :'bg-color1 text-lg ml-8 text-gray-200 font-fontArial rounded-bl-none animate-skew'
-                                    }`}>
-                                        {msg.message}
-                                    </div>
+                        
+                                    { msg.envoyeur === "user" ? (
+                                        <div className="max-w-[80%] p-3 rounded-3xl shadow-sm 
+                                                        bg-color5 text-lg mr-8 text-color9 
+                                                        font-fontArial rounded-tr-none
+                                        ">
+                                            {msg.message}
+                                        </div> 
+
+                                        
+                                    ):(
+                                        <ChatResponse text={msg.message} />
+                                    )}
+
                                 </div>
                             ))
                         }
@@ -347,7 +356,7 @@ export default function HomePage({user, onLogout}:{ user:User, onLogout:() => vo
                         <>
                         <h1 className="text-2xl sm:text-4xl tracking-wide text-white animate-reveal
                         ">
-                            Est ce que je peut vous aider?
+                            Est ce que je peux vous aider?
                         </h1>
                         <FontAwesomeIcon 
                             icon={faRobot}
